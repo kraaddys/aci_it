@@ -131,7 +131,7 @@ echo "demo" > ~/data/file.txt
 2025-10-04 19:19:49
 Путь: /
 Использовано: 24%
-Статус: OK
+Статус: OK.
 ```
 
 ![image](https://i.imgur.com/zZoVG28.png)
