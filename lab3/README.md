@@ -23,9 +23,12 @@
 
 ```bash
 sudo apt update
-sudo apt install -y ansible nginx openssh-server
-sudo systemctl enable --now ssh
+sudo apt install -y ansible nginx
 ```
+
+![image](https://i.imgur.com/6I99DEK.png)
+
+![image](https://i.imgur.com/hK809B1.png)
 
 ---
 
@@ -36,6 +39,10 @@ mkdir -p ~/ansible/{playbooks,files}
 cd ~/ansible
 ```
 
+![image](https://i.imgur.com/56srXCA.png)
+
+Исходный скрипт файла `ansible.cfg`:
+
 **ansible.cfg:**
 
 ```ini
@@ -45,12 +52,18 @@ host_key_checking = False
 interpreter_python = auto
 ```
 
+![image](https://i.imgur.com/a7n0NIg.png)
+
+Исходный скрипт файла `inventory.ini`:
+
 **inventory.ini:**
 
 ```ini
 [web]
 localhost ansible_connection=local
 ```
+
+![image](https://i.imgur.com/4ivliQP.png)
 
 ---
 
@@ -84,12 +97,16 @@ server {
 EOF
 ```
 
+![image](https://i.imgur.com/UV9LPoP.png)
+
 **Команда для упаковки сайта:**
 
 ```bash
 mkdir -p /tmp/mysite && echo '<h1>Hello from Ansible</h1>' > /tmp/mysite/index.html
 tar -C /tmp -czf files/site.tar.gz mysite
 ```
+
+![image](https://i.imgur.com/0okt5OJ.png)
 
 **playbooks/01_static_site.yml:**
 
@@ -183,11 +200,17 @@ cat > playbooks/01_static_site.yml << 'YAML'
 YAML
 ```
 
+![image](https://i.imgur.com/DKCQrgm.png)
+
 Для запуска используем команду:
 
 ```bash
 ansible-playbook playbooks/01_static_site.yml
 ```
+
+![image](https://i.imgur.com/DlPPsVL.png)
+
+![image](https://i.imgur.com/J7vq988.png)
 
 **Результат:**
 
@@ -196,6 +219,8 @@ ansible-playbook playbooks/01_static_site.yml
 * архив успешно распакован в web-директорию;
 * конфигурация `mysite.conf` подключена в nginx;
 * сайт доступен по адресу [http://127.0.0.1](http://127.0.0.1).
+
+![image](https://i.imgur.com/RPzahJc.png)
 
 ---
 
@@ -272,11 +297,17 @@ cat > playbooks/02_deploy_user.yml << 'YAML'
 YAML
 ```
 
+![image](https://i.imgur.com/gdpQVMt.png)
+
 Для запуска скрипта используется команда:
 
 ```bash
 ansible-playbook playbooks/02_deploy_user.yml
 ```
+
+![image](https://i.imgur.com/n123zLu.png)
+
+![image](https://i.imgur.com/q56j0sq.png)
 
 **Результат:**
 
@@ -288,6 +319,14 @@ ansible-playbook playbooks/02_deploy_user.yml
 
 ### 5. Проверка SSH-доступа
 
+Для начала устанавливаем утилиту OpenSSH на виртуальную машину:
+
+![image](https://i.imgur.com/FF6vcfV.png)
+
+Затем выполняем проверку работоспособности SSH-сервера:
+
+![image](https://i.imgur.com/8TjS22S.png)
+
 Вход по ключу выполнен из-под обычного пользователя:
 
 ```bash
@@ -295,6 +334,8 @@ ssh -i ~/.ssh/id_ed25519 deploy@127.0.0.1
 ```
 
 **Результат:** вход выполнен без пароля.
+
+![image](https://i.imgur.com/q6iMN9c.png)
 
 ---
 
